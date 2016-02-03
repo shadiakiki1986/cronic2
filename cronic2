@@ -1,17 +1,6 @@
 #!/bin/bash
 # This is a fork of the original cronic (Ref below)
-#
-# The difference between this version and the original is that 
-# this one remembers if a command had triggered an error before
-# and doesn't re-show the error in such a case.
-# 
-# If the command starts working again, then this version will
-# forget that it shouldn't notify about it, and will subsequently
-# notify again upon a later failure of the command.
-#
-# This memory feature only works if the file `~/.cronic2.db` exists
-# If it doesn't exist, this version will behave the same as the original
-# version.
+# Check README.md in https://github.com/shadiakiki1986/cronic2 for more details
 #
 # The original cronic:
 #   http://habilis.net/cronic/
