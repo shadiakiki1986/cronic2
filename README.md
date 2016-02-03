@@ -1,7 +1,6 @@
 # Description
-This is a fork of the original cronic
+This is a fork of the original [cronic](http://habilis.net/cronic/)
 
-     http://habilis.net/cronic/
      Cronic v2 - cron job report wrapper
      Copyright 2007 Chuck Houpt. No rights reserved, whatsoever.
      Public Domain CC0: http://creativecommons.org/publicdomain/zero/1.0/
