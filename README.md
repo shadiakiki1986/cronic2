@@ -21,3 +21,6 @@ For a global install:
 # Unit tests
 
     cd tests; bash test1.sh
+
+# root crontab
+To make this work with root crontab, you need to manually set the path to the `.cronic2.db` file from `~/.cronic2.db` to something like `/home/shadi/.cronic2.db`
