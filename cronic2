@@ -15,6 +15,10 @@ ERR=/tmp/cronic.err.$$
 TRACE=/tmp/cronic.trace.$$
 CMND=`echo $@`
 
+# if CRONIC2 is not defined, to avoid getting error: "CRONIC2: unbound variable"
+# use parameter expansion
+CRONIC2="${CRONIC2-}" 
+
 set +e
 "$@" >$OUT 2>$TRACE
 RESULT=$?

@@ -9,17 +9,28 @@ cronic2 notifies only on first failure.
 It remembers later that it had already notified.
 If a script stops failing, it'll forget that it failed, so that if it failed again, it would notify again
 
-To start using the memory feature, you need to run
+# Usage
+
+The memory feature of `cronic2` is on when
+* the cronic2 script sees the environmental variable `CRONIC2` set to a path to a file
+* and the file referenced by `CRONIC2` environmental variable exists
+
+This file will serve as the "memory" of `cronic2`.
+If the above 2 conditions are not met, `cronic2` falls back to the original `cronic` functionality, i.e. notifying on every failure.
+
+To set the environment variable `CRONIC2` in crontab, refer to [this](http://stackoverflow.com/questions/2229825/where-can-i-set-environment-variables-that-crontab-will-use) SO question with excellent answers. Here I will list the `vixie-crontab` [solution](http://stackoverflow.com/a/10657111/4126114) of typing the following at the head of the `crontab -e` file
+
+    CRONIC2=~/.cronic2.db
+
+where I chose `~/.cronic2.db` to be the memory file of `cronic2`
+
+On the other hand, to start using the memory feature of `cronic2` in your shell scripts, you need to run
 
     echo "export CRONIC2=~/.cronic2.db" >> ~/.bashrc
     touch ~/.cronic2.db
     # restart bash
     # http://unix.stackexchange.com/a/22722
     exec bash -l 
-
-where I chose `~/.cronic2.db` to be the location of the file in which `cronic2` stores the commands that had failed.
-
-If the environmental variable `CRONIC2` exists, and if the file it references exists, then the memory feature works. Otherwise, `cronic2` falls back to the original `cronic` functionality, i.e. notifying on every failure
 
 # Installation
 For a global install:

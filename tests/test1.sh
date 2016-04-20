@@ -3,6 +3,15 @@
 
 set -e
 
+#-------------------------------------------------
+# 0. test cases of memory disabled by no environment variable
+unset CRONIC2
+# test error on first failure
+( tf=`tempfile` && bash ../cronic2 ls bla > $tf && test `wc -l $tf|awk '{print $1}'` -gt 0 && rm $tf       ) || ( echo "test 0-1 failed" && exit 1 )
+# test error on 2nd failure
+( tf=`tempfile` && bash ../cronic2 ls bla > $tf && test `wc -l $tf|awk '{print $1}'` -gt 0 && rm $tf       ) || ( echo "test 0-2 failed" && exit 1 )
+#-------------------------------------------------
+
 export CRONIC2=~/test_cronic2.db
 
 if [ -s $CRONIC2 ]; then
@@ -12,7 +21,7 @@ if [ -s $CRONIC2 ]; then
 fi
 
 #-------------------------------------------------
-# 1. test cases of memory disabled
+# 1. test cases of memory disabled by no file
 rm -f $CRONIC2
 # test error on first failure
 ( tf=`tempfile` && bash ../cronic2 ls bla > $tf && test `wc -l $tf|awk '{print $1}'` -gt 0 && test ! -s $CRONIC2 && rm $tf       ) || ( echo "test 1-1 failed" && exit 1 )
@@ -54,5 +63,5 @@ fi
 ( tf=`tempfile` && rm ~/bla && bash ../cronic2 ls ~/bla > $tf && test `wc -l $tf|awk '{print $1}'` -gt 0  && rm $tf       ) || ( echo "test 3-6 failed" && exit 1 )
 
 #--------------------------------
-#rm $CRONIC2
+rm $CRONIC2
 echo "All tests pass"
