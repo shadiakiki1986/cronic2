@@ -18,11 +18,17 @@ The memory feature of `cronic2` is on when
 This file will serve as the "memory" of `cronic2`.
 If the above 2 conditions are not met, `cronic2` falls back to the original `cronic` functionality, i.e. notifying on every failure.
 
-To set the environment variable `CRONIC2` in crontab, refer to [this](http://stackoverflow.com/questions/2229825/where-can-i-set-environment-variables-that-crontab-will-use) SO question with excellent answers. Here I will list the `vixie-crontab` [solution](http://stackoverflow.com/a/10657111/4126114) of typing the following at the head of the `crontab -e` file
+To set the environment variable `CRONIC2` in crontab,
+refer to [this](http://stackoverflow.com/questions/2229825/where-can-i-set-environment-variables-that-crontab-will-use)
+SO question with excellent answers.
+Here I will list the `vixie-crontab` [solution](http://stackoverflow.com/a/10657111/4126114)
+of typing the following at the head of the `crontab -e` file:
+`CRONIC2=/home/shadi/.cronic2.db` where I chose `/home/shadi/.cronic2.db`
+to be the memory file of `cronic2`.
 
-    CRONIC2=~/.cronic2.db
-
-where I chose `~/.cronic2.db` to be the memory file of `cronic2`
+If you would like to use the ~ in the path, e.g. `CRONIC2=~/.cronic2.db`,
+you will also need `SHELL=/bin/bash` before it
+as documented [here](http://manpages.ubuntu.com/manpages/xenial/en/man5/crontab.5.html)
 
 On the other hand, to start using the memory feature of `cronic2` in your shell scripts, you need to run
 
