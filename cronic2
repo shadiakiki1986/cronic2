@@ -13,7 +13,6 @@ set -eu
 OUT=/tmp/cronic.out.$$
 ERR=/tmp/cronic.err.$$
 TRACE=/tmp/cronic.trace.$$
-NOTIF=~/.cronic2.db
 CMND=`echo $@`
 
 set +e
@@ -32,7 +31,7 @@ fi
 if [ $RESULT -ne 0 -o -s "$ERR" ]
     then
 
-    if [ ! -e "$NOTIF" ] || ! grep -aq "$CMND" $NOTIF
+    if [ -z "$CRONIC2" ] || [ ! -e "$CRONIC2" ] || ! grep -aq "$CMND" $CRONIC2
     then
         echo "Cronic detected failure or error output for the command:"
         echo "$@"
@@ -51,20 +50,20 @@ if [ $RESULT -ne 0 -o -s "$ERR" ]
             cat "$TRACE"
         fi
 
-        # store in NOTIF file to avoid re-notification
-        if [ ! -e "$NOTIF" ]
+        # store in CRONIC2 file to avoid re-notification
+        if [ ! -e "$CRONIC2" ]
         then
           echo $CMND
         else
-          echo $CMND >> $NOTIF
+          echo $CMND >> $CRONIC2
         fi
     fi
 else
-    if [ -e "$NOTIF" ] && grep -aq "$CMND" $NOTIF
+    if [ -e "$CRONIC2" ] && grep -aq "$CMND" $CRONIC2
     then
-        # drop the entry from $NOTIF
+        # drop the entry from $CRONIC2
         # The || is needed for the case where the error is the last error in the file, and grep -av returns an empty result
-        ( grep -av "$CMND" "$NOTIF" > ${NOTIF}.tmp && mv ${NOTIF}.tmp "$NOTIF" ) || ( rm ${NOTIF} && touch ${NOTIF} && rm ${NOTIF}.tmp )
+        ( grep -av "$CMND" "$CRONIC2" > ${CRONIC2}.tmp && mv ${CRONIC2}.tmp "$CRONIC2" ) || ( rm ${CRONIC2} && touch ${CRONIC2} && rm ${CRONIC2}.tmp )
     fi
 fi
 

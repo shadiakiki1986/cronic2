@@ -9,8 +9,17 @@ cronic2 notifies only on first failure.
 It remembers later that it had already notified.
 If a script stops failing, it'll forget that it failed, so that if it failed again, it would notify again
 
-To start using the memory feature, you need to run `touch ~/.cronic2.db`.
-If this file exists, then the memory feature works, otherwise it won't and falls back to the original cronic functionality
+To start using the memory feature, you need to run
+
+    echo "export CRONIC2=~/.cronic2.db" >> ~/.bashrc
+    touch ~/.cronic2.db
+    # restart bash
+    # http://unix.stackexchange.com/a/22722
+    exec bash -l 
+
+where I chose `~/.cronic2.db` to be the location of the file in which `cronic2` stores the commands that had failed.
+
+If the environmental variable `CRONIC2` exists, and if the file it references exists, then the memory feature works. Otherwise, `cronic2` falls back to the original `cronic` functionality, i.e. notifying on every failure
 
 # Installation
 For a global install:
